@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block title %}Всі медіа{% endblock %}
+
+{% block content %}
+<h1>🗂️ Всі медіа</h1>
+
+<h2>🖼️ Фото:</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    {% for photo in photos %}
+        <img src="{{ photo.image.url }}" width="150">
+    {% empty %}
+        <p>Фото відсутні.</p>
+    {% endfor %}
+</div>
+
+<h2>🎞️ Відео:</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+    {% for video in videos %}
+        <video width="200" controls>
+            <source src="{{ video.video.url }}">
+        </video>
+    {% empty %}
+        <p>Відео відсутні.</p>
+    {% endfor %}
+</div>
+{% endblock %}

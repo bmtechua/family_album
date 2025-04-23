@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block title %}Ви вийшли{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Ви успішно вийшли з облікового запису.</h2>
+    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Увійти знову</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<h2>{{ album.title }}</h2>
+<p>{{ album.description }}</p>
+
+<h3>Медіа</h3>
+{% for item in album.media.all %}
+  {% if item.is_video %}
+    <video width="320" height="240" controls>
+      <source src="{{ item.video.url }}" type="video/mp4">
+      Ваш браузер не підтримує відео.
+    </video>
+  {% else %}
+    <img src="{{ item.image.url }}" width="320" height="240">
+  {% endif %}
+  <p>{{ item.caption }}</p>
+{% endfor %}
+
+<h3>Додати фото або відео</h3>
+<form method="post" enctype="multipart/form-data" action="{% url 'media_upload' album.id %}">
+  {% csrf_token %}
+  {{ media_form.as_p }}
+  <button type="submit">Завантажити</button>
+</form>

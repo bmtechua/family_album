@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сімейний альбом{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'album_list' %}">Сімейний Альбом</a>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'album_list' %}">Альбоми</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'upload_media' %}">Завантажити медіа</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"  href="{% url 'all_media' %}">Всі медіа</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <span class="navbar-text text-light me-2">Привіт, {{ user.username }}</span>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Вийти</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'login' %}">Увійти</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'register' %}">Реєстрація</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>
