@@ -6,6 +6,16 @@
 
 <h1>Завантажити медіа</h1>
 
+<h2>📁 Створити альбом</h2>
+<form method="post" class="mb-4">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ album_form.name.label_tag }}
+        {{ album_form.name }}
+    </div>
+    <button type="submit" name="create_album">Створити альбом</button>
+</form>
+
 <h2>🖼️ Завантажити зображення</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -24,45 +34,14 @@
 
 <h2>📂 Медіа без альбому</h2>
 
+{% if not albums %}
+    <p>❗Спочатку створіть хоча б один альбом, щоб мати змогу додавати медіа.</p>
+{% endif %}
+
 <h3>Зображення:</h3>
 {% for photo in unassigned_photos %}
     <img src="{{ photo.image.url }}" width="100">
-    <form method="post" action="{% url 'assign_to_album' %}">
-        {% csrf_token %}
-        <input type="hidden" name="media_id" value="{{ photo.id }}">
-        <input type="hidden" name="media_type" value="photo">
-        <select name="album">
-            {% for album in albums %}
-                <option value="{{ album.id }}">{{ album.name }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit" name="assign_to_album">Додати до альбому</button>
-    </form>
-{% endfor %}
-
-<h3>Відео:</h3>
-{% for video in unassigned_videos %}
-    <video width="200" controls>
-        <source src="{{ video.video.url }}">
-    </video>
-    <form method="post" action="{% url 'assign_to_album' %}">
-        {% csrf_token %}
-        <input type="hidden" name="media_id" value="{{ video.id }}">
-        <input type="hidden" name="media_type" value="video">
-        <select name="album">
-            {% for album in albums %}
-                <option value="{{ album.id }}">{{ album.name }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Додати до альбому</button>
-    </form>
-
     {% if albums %}
-    <h2>📂 Медіа без альбому</h2>
-
-    <h3>Зображення:</h3>
-    {% for photo in unassigned_photos %}
-        <img src="{{ photo.image.url }}" width="100">
         <form method="post" action="{% url 'assign_to_album' %}">
             {% csrf_token %}
             <input type="hidden" name="media_id" value="{{ photo.id }}">
@@ -74,13 +53,19 @@
             </select>
             <button type="submit">Додати до альбому</button>
         </form>
-    {% endfor %}
+    {% else %}
+        <p><em>Немає доступних альбомів для додавання.</em></p>
+    {% endif %}
+{% empty %}
+    <p>Немає зображень без альбому.</p>
+{% endfor %}
 
-    <h3>Відео:</h3>
-    {% for video in unassigned_videos %}
-        <video width="200" controls>
-            <source src="{{ video.video.url }}">
-        </video>
+<h3>Відео:</h3>
+{% for video in unassigned_videos %}
+    <video width="200" controls>
+        <source src="{{ video.video.url }}">
+    </video>
+    {% if albums %}
         <form method="post" action="{% url 'assign_to_album' %}">
             {% csrf_token %}
             <input type="hidden" name="media_id" value="{{ video.id }}">
@@ -92,10 +77,11 @@
             </select>
             <button type="submit">Додати до альбому</button>
         </form>
-    {% endfor %}
-{% else %}
-    <p>❗Спочатку створіть альбом, щоб можна було додавати медіа.</p>
-{% endif %}
+    {% else %}
+        <p><em>Немає доступних альбомів для додавання.</em></p>
+    {% endif %}
+{% empty %}
+    <p>Немає відео без альбому.</p>
 {% endfor %}
 
 {% endblock %}
