@@ -26,5 +26,8 @@
         "env": {
             "DJANGO_SETTINGS_MODULE": "base.settings"
         }
-    }
+    },
+    "buildCommand": "./vercel-build.sh",
+    "outputDirectory": "",
+    "ignoreCommand": "echo 'nothing to ignore'"
 }
