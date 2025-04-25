@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block title %}Альбоми{% endblock %}
+
+{% block content %}
+<h1>Сімейні альбоми</h1>
+<ul class="list-group">
+    {% for album in albums %}
+        <li class="list-group-item">
+            <a href="{% url 'album_detail' album.pk %}">{{ album.name }}</a>
+        </li>
+    {% empty %}
+        <li class="list-group-item">Немає альбомів.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
