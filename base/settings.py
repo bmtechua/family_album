@@ -86,15 +86,6 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Завантаження змінних середовища з файлу .env
-load_dotenv()
-
-# Відладочний вивід для перевірки змінних середовища
-print("DATABASE_NAME:", os.getenv('DATABASE_NAME'))
-print("DATABASE_USER:", os.getenv('DATABASE_USER'))
-print("DATABASE_PASSWORD:", os.getenv('DATABASE_PASSWORD'))
-print("DATABASE_HOST:", os.getenv('DATABASE_HOST'))
-print("DATABASE_PORT:", os.getenv('DATABASE_PORT'))
 
 DATABASES = {
     'default': {
